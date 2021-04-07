@@ -1,65 +1,108 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Layout from "../components/layout";
+import { getSortedSeasonsBad, getSortedSeasonsBetter } from "../lib/episodes";
+import { Menu } from "@headlessui/react";
 
-export default function Home() {
+export async function getStaticProps() {
+  const breakingSeasons = await getSortedSeasonsBad();
+  const betterSeasons = await getSortedSeasonsBetter();
+  return {
+    props: {
+      breakingSeasons,
+      betterSeasons,
+    },
+  };
+}
+
+export default function Home({ breakingSeasons, betterSeasons }) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout home>
+      <div class="mt-10">
+        <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+          <div class="relative">
+            <dt>
+              <img src="https://storage.googleapis.com/lanacion-media-storage/2021/02/c0a7cc92-better.jpg"></img>
+            </dt>
+            <div class="grid grid-cols-1 gap-x-8">
+              {betterSeasons.map((season) => (
+                <Menu>
+                  <Menu.Button class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Season {season.number}
+                    <svg
+                      class="-mr-1 ml-2 h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </Menu.Button>
+                  <Menu.Items>
+                    {season.episodes.map((episode) => (
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            href={`/episodes/${episode.episode_id}`}
+                          >
+                            {episode.title}
+                          </a>
+                        )}
+                      </Menu.Item>
+                    ))}
+                  </Menu.Items>
+                </Menu>
+              ))}
+            </div>
+          </div>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+          <div class="relative">
+            <dt>
+              <img src="https://i.blogs.es/6d84c8/breaking-bad/1366_2000.jpg" />
+            </dt>
+            <div class="grid grid-cols-1 gap-x-8">
+              {breakingSeasons.map((season) => (
+                <Menu>
+                  <Menu.Button class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Season {season.number}
+                    <svg
+                      class="-mr-1 ml-2 h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </Menu.Button>
+                  <Menu.Items>
+                    {season.episodes.map((episode) => (
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            href={`/episodes/${episode.episode_id}`}
+                          >
+                            {episode.title}
+                          </a>
+                        )}
+                      </Menu.Item>
+                    ))}
+                  </Menu.Items>
+                </Menu>
+              ))}
+            </div>
+          </div>
+        </dl>
+      </div>
+    </Layout>
+  );
 }

@@ -1,0 +1,28 @@
+.container {
+  position: relative;
+}
+
+.search {
+  border: 1px solid #666;
+  box-sizing: border-box;
+  font-size: 18px;
+  padding: 18px;
+}
+
+.results {
+  list-style: none;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.result {
+  padding: 18px;
+}
+
+.result:hover {
+  background: #0070f3;
+}
