@@ -13,7 +13,7 @@ export default function Layout({ children, home }) {
 
       <div class="py-12 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+          <div class="hidden md:flex items-center justify-end md:flex-1">
             <Search />
           </div>
           <div class="lg:text-center">

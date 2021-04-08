@@ -12,8 +12,6 @@ export default function SeasonModal({ seasonData }) {
     setIsOpen(false);
   }
 
-  console.log(seasonData)
-
   return (
     <div class='ml-3 text-indigo-600 transform hover:-translate-y-0.5'>
       <button onClick={openModal}>{seasonData.number}</button>

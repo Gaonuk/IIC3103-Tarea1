@@ -17,7 +17,6 @@ export default function Search() {
     const query = event.target.value;
     setQuery(query);
     if (query.length) {
-      console.log(searchEndpoint(query))
       fetch(searchEndpoint(query))
         .then((res) => res.json())
         .then((res) => {

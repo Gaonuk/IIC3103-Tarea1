@@ -18,7 +18,6 @@ export async function getStaticProps({ params }) {
   const characterBetterSeasons = await getCharacterBetterSeasons(
     character.better_call_saul_appearance
   );
-  console.log(character);
   return {
     props: {
       character,

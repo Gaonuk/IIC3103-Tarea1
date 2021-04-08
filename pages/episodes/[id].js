@@ -5,7 +5,6 @@ export async function getStaticProps({ params }) {
   const episodeData = await getEpisodeData(params.id);
   const episode = episodeData[0];
   const characters = await getEpisodeCharactersData(episode.characters)
-  console.log(characters);
   return {
     props: {
       episode,
@@ -64,7 +63,7 @@ export default function Episode({ episode, characters }) {
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
                   {characters.map((character) => (
-                    <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                    <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm" key={character.char_id}>
                       <div class="w-0 flex-1 flex items-center">
                         <a
                           href={`/characters/${character.char_id}`}
