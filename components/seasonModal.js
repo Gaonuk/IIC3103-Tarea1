@@ -45,7 +45,7 @@ export default function SeasonModal({ seasonData }) {
               <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-indigo-600 opacity-25"></div>
               <ul class="items-center pt-5">
                   {seasonData.episodes.map((episode) => (
-                    <li class='pt-2'>
+                    <li class='pt-2' key={episode.episode_id}>
                       <span class='text-indigo-600 mr-4'>Episode {episode.episode}:</span>
                       <a href={`/episodes/${episode.episode_id}`}>
                         {episode.title}

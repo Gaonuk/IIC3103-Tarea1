@@ -58,7 +58,7 @@ export default function Character({
               <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
                 <strong class="text-indigo-700">Occupations:</strong>&nbsp;
                 {character.occupation.map((occupation) => (
-                  <span>{occupation}&nbsp;&nbsp;</span>
+                  <span key={occupation}>{occupation}&nbsp;&nbsp;</span>
                 ))}
               </p>
             )}
