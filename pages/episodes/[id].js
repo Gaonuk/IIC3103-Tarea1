@@ -1,23 +1,25 @@
-import { getEpisodeData, getAllEpisodesId, getEpisodeCharactersData } from "../../lib/episodes";
+import {
+  getEpisodeData,
+  getAllEpisodesId,
+  getEpisodeCharactersData,
+} from "../../lib/episodes";
 import Layout from "../../components/layout";
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const episodeData = await getEpisodeData(params.id);
+  console.log(episodeData)
+  if (!episodeData || episodeData.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
   const episode = episodeData[0];
-  const characters = await getEpisodeCharactersData(episode.characters)
+  const characters = await getEpisodeCharactersData(episode.characters);
   return {
     props: {
       episode,
-      characters
+      characters,
     },
-  };
-}
-
-export async function getStaticPaths() {
-  const paths = await getAllEpisodesId();
-  return {
-    paths,
-    fallback: false,
   };
 }
 
@@ -63,7 +65,10 @@ export default function Episode({ episode, characters }) {
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
                   {characters.map((character) => (
-                    <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm" key={character.char_id}>
+                    <li
+                      class="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                      key={character.char_id}
+                    >
                       <div class="w-0 flex-1 flex items-center">
                         <a
                           href={`/characters/${character.char_id}`}

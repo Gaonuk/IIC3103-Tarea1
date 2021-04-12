@@ -2,7 +2,7 @@ import Layout from "../components/layout";
 import { getSortedSeasonsBad, getSortedSeasonsBetter } from "../lib/episodes";
 import { Menu } from "@headlessui/react";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const breakingSeasons = await getSortedSeasonsBad();
   const betterSeasons = await getSortedSeasonsBetter();
   return {
@@ -25,7 +25,10 @@ export default function Home({ breakingSeasons, betterSeasons }) {
             <div class="grid grid-cols-1 gap-x-8">
               {betterSeasons.map((season) => (
                 <Menu>
-                  <Menu.Button class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" key={`BetterCallSaul-${season.number}`}>
+                  <Menu.Button
+                    class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    key={`BetterCallSaul-${season.number}`}
+                  >
                     Season {season.number}
                     <svg
                       class="-mr-1 ml-2 h-5 w-5"
@@ -68,7 +71,10 @@ export default function Home({ breakingSeasons, betterSeasons }) {
             <div class="grid grid-cols-1 gap-x-8">
               {breakingSeasons.map((season) => (
                 <Menu>
-                  <Menu.Button class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" key={`BreakingBad-${season.number}`}>
+                  <Menu.Button
+                    class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    key={`BreakingBad-${season.number}`}
+                  >
                     Season {season.number}
                     <svg
                       class="-mr-1 ml-2 h-5 w-5"

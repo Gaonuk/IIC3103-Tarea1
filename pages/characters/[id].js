@@ -8,8 +8,14 @@ import {
 import Layout from "../../components/layout";
 import SeasonModal from "../../components/seasonModal";
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const charactersData = await getCharacterData(params.id);
+  console.log(charactersData);
+  if (!charactersData || charactersData.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
   const character = charactersData[0];
   const characterQuotes = await getCharacterQuotes(character.name);
   const characterBadSeasons = await getCharacterBadSeasons(
@@ -25,14 +31,6 @@ export async function getStaticProps({ params }) {
       characterBadSeasons,
       characterBetterSeasons,
     },
-  };
-}
-
-export async function getStaticPaths() {
-  const paths = await getAllCharactersId();
-  return {
-    paths,
-    fallback: false,
   };
 }
 
@@ -71,7 +69,7 @@ export default function Character({
                   <br />
                   <ul style={{ listStyle: "disc" }} class="items-center pl-8">
                     {character.occupation.map((occupation) => (
-                      <li>{occupation}&nbsp;&nbsp;</li>
+                      <li key={occupation}>{occupation}&nbsp;&nbsp;</li>
                     ))}
                   </ul>
                 </p>
@@ -93,26 +91,26 @@ export default function Character({
               {character.category}
             </p>
             {character.appearance.length != 0 && (
-              <p class="pt-6 text-base font-bold flex items-center justify-center lg:justify-start">
+              <div class="pt-6 text-base font-bold flex items-center justify-center lg:justify-start">
                 <strong class="text-indigo-700">
                   Breaking Bad Appearances:
                 </strong>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 {characterBadSeasons.map((season) => (
-                  <SeasonModal seasonData={season} />
+                  <SeasonModal seasonData={season} key={season.number} />
                 ))}
-              </p>
+              </div>
             )}
             {character.better_call_saul_appearance.length != 0 && (
-              <p class="pt-6 text-base font-bold flex items-center justify-center lg:justify-start">
+              <div class="pt-6 text-base font-bold flex items-center justify-center lg:justify-start">
                 <strong class="text-indigo-700">
                   Better Call Saul Appearances:
                 </strong>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 {characterBetterSeasons.map((season) => (
-                  <SeasonModal seasonData={season} />
+                  <SeasonModal seasonData={season} key={season.number} />
                 ))}
-              </p>
+              </div>
             )}
           </div>
         </div>
